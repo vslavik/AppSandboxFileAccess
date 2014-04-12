@@ -269,7 +269,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppSandboxFileAccess Supporting Files/AppSandboxFileAccess-Prefix.pch";
 				INFOPLIST_FILE = "AppSandboxFileAccess Supporting Files/AppSandboxFileAccess-Info.plist";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -284,7 +286,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppSandboxFileAccess Supporting Files/AppSandboxFileAccess-Prefix.pch";
 				INFOPLIST_FILE = "AppSandboxFileAccess Supporting Files/AppSandboxFileAccess-Info.plist";
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
