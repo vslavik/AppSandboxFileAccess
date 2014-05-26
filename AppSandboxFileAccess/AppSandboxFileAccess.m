@@ -53,12 +53,11 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-		NSString *applicationName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:CFBundleDisplayName];
-		if (!applicationName)
-			applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey:CFBundleDisplayName];
-		if (!applicationName)
+		NSString *applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey:CFBundleDisplayName];
+		if (!applicationName) {
 			applicationName = [[NSBundle mainBundle] objectForInfoDictionaryKey:CFBundleName];
-
+		}
+		
 		self.title = @"Allow Access";
 		self.message = [NSString stringWithFormat:@"%@ needs to access this path to continue. Click Allow to continue.", applicationName];
 		self.prompt = @"Allow";
@@ -87,7 +86,7 @@
 	url = [NSURL fileURLWithPath:path];
 	
 	// display the open panel
-	void (^display_panel_block)() = ^{
+	dispatch_block_t displayOpenPanelBlock = ^{
 		NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 		[openPanel setMessage:self.message];
 		[openPanel setCanCreateDirectories:NO];
@@ -106,11 +105,10 @@
 			allowedUrl = [openPanel URL];
 		}
 	};
-	dispatch_queue_t main_queue = dispatch_get_main_queue();
-	if (dispatch_get_current_queue() == main_queue) {
-		display_panel_block();
+	if ([NSThread isMainThread]) {
+		displayOpenPanelBlock();
 	} else {
-		dispatch_sync(main_queue, display_panel_block);
+		dispatch_sync(dispatch_get_main_queue(), displayOpenPanelBlock);
 	}
 
 	return allowedUrl;
